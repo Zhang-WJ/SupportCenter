@@ -4,7 +4,7 @@ import * as Users from './connectors/users'
 import * as Questions from './connectors/questions'
 import * as Tickets from './connectors/tickets'
 
-initData()
+initData();
 
 function privateRoute (req, res, next) {
   if (!req.user) {
@@ -23,11 +23,11 @@ function sendUserInfo (req, res) {
 
 export default function (app) {
   app.get('/questions', async (req, res) => {
-    const result = await Questions.getAll()
+    const result = await Questions.getAll();
     setTimeout(() => {
       res.json(result)
     }, 1500)
-  })
+  });
 
   app.post('/signup', async (req, res) => {
     try {
@@ -38,13 +38,13 @@ export default function (app) {
           username: req.body.username,
           email: req.body.email,
           password: req.body.password,
-        })
+        });
         res.json({ status: 'ok' })
       }
     } catch (e) {
       res.status(403).send(e.message)
     }
-  })
+  });
 
   app.post('/login', (req, res, next) => {
     if (req.user) {
@@ -58,7 +58,7 @@ export default function (app) {
     sendUserInfo(req, res)
   }, (err, req, res, next) => {
     res.status(403).send(err)
-  })
+  });
 
   app.get('/user', (req, res) => {
     if (!req.user) {
@@ -66,31 +66,31 @@ export default function (app) {
     } else {
       sendUserInfo(req, res)
     }
-  })
+  });
 
   app.get('/logout', (req, res) => {
-    req.logout()
+    req.logout();
     res.json({ status: 'ok' })
-  })
+  });
 
   app.get('/tickets', privateRoute, async (req, res) => {
     const result = await Tickets.getAll({
       user: req.user,
-    })
+    });
     res.json(result)
-  })
+  });
 
   app.post('/tickets/new', privateRoute, async (req, res) => {
     const result = await Tickets.create({
       user: req.user,
-    }, req.body)
+    }, req.body);
     res.json(result)
-  })
+  });
 
   app.get('/ticket/:id', privateRoute, async (req, res) => {
     const result = await Tickets.getById({
       user: req.user,
-    }, req.params.id)
+    }, req.params.id);
     res.json(result)
   })
 }

@@ -3,16 +3,16 @@ import { collectionFactory, modelFactory } from './utils/database'
 const idIndex = {
   fieldName: '_id',
   unique: true,
-}
+};
 
-export const Users = modelFactory(collectionFactory('users', idIndex))
-export const Tickets = modelFactory(collectionFactory('tickets', idIndex))
-export const Questions = modelFactory(collectionFactory('questions', idIndex))
+export const Users = modelFactory(collectionFactory('users', idIndex));
+export const Tickets = modelFactory(collectionFactory('tickets', idIndex));
+export const Questions = modelFactory(collectionFactory('questions', idIndex));
 
 // Init
 export async function initData () {
   // FAQ
-  Questions.remove({}, {}, true)
+  Questions.remove({}, {}, true);
   Questions.insert([
     {
       title: 'Where is my order?',
